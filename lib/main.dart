@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Weather'),
+      home: MyHomePage(title: ''),
     );
   }
 }
@@ -24,15 +24,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var searchIcon = Icon(Icons.search, color: Colors.white);
+  var searchIconState = 0;
+  Widget appBarTitle = Text('Weather');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: appBarTitle,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search, color: Colors.white,),
-            onPressed:,
+          Builder(
+            builder: (context) =>
+                IconButton(
+                  icon: searchIcon,
+                  onPressed: () {
+                    search(context);
+                  },
+                ),
           )
         ],
       ),
@@ -75,7 +84,30 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  search() {
-
+  search(BuildContext context) {
+    searchIconState++;
+    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("Show search bar")));
+    setState(() {
+      if (searchIconState % 2 != 0) {
+        searchIcon = Icon(Icons.close, color: Colors.white);
+        appBarTitle = TextField(
+            style: TextStyle(color: Colors.white, fontSize: 18),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                icon: Icon(Icons.search, color: Colors.white),
+                hintText: 'Search...',
+                hintStyle: TextStyle(
+                  color: Colors.white.withOpacity(0.5),
+                  //fontWeight: FontWeight.bold,
+                  fontSize: 18
+                )
+            )
+        );
+      }
+      else {
+        searchIcon = Icon(Icons.search, color:Colors.white);
+        appBarTitle = Text('Weather');
+      }
+    });
   }
 }
