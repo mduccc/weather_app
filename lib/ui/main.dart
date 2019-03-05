@@ -3,13 +3,15 @@ import 'today.dart';
 import 'tomorrow.dart';
 import 'week.dart';
 
+var primarySwatch = Colors.deepPurple;
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Weather',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: primarySwatch,
       ),
       home: MyHomePage(title: ''),
     );
