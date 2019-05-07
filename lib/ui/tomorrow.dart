@@ -7,7 +7,7 @@ tomorrowUI() {
 
   while (index < 24) {
     list.add(index.toString());
-    index++;
+    index += 3;
   }
 
   return Container(
@@ -86,36 +86,39 @@ tomorrowUI() {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(top: 90),
-            height: 120,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: list.length == 0 ? 0 : list.length,
-                itemBuilder: (BuildContext _context, int _index){
-                  return Container(
-                      padding: EdgeInsets.all(17),
-                      width: 80,
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Text(_index.toString() + ":00", style: TextStyle(color: Colors.white),),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3),
-                            child:
-                            Icon(Icons.wb_sunny, size: 23, color: Colors.white),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 5, top: 15),
-                            child: Text(
-                              _index.toString() + htmlDecode('&#176;') + 'C',
-                              style: TextStyle(color: Colors.white, fontSize: 12),
+              margin: EdgeInsets.only(top: 90),
+              height: 120,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: list.length == 0 ? 0 : list.length,
+                  itemBuilder: (BuildContext _context, int _index) {
+                    return Container(
+                        padding: EdgeInsets.all(17),
+                        width: 80,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: Text(
+                                list[_index] + ":00",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
-                          )
-                        ],
-                      ));
-                })
-          )
+                            Container(
+                              margin: EdgeInsets.only(top: 3),
+                              child: Icon(Icons.wb_sunny,
+                                  size: 23, color: Colors.white),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 5, top: 15),
+                              child: Text(
+                                _index.toString() + htmlDecode('&#176;') + 'C',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12),
+                              ),
+                            )
+                          ],
+                        ));
+                  }))
         ],
       ));
 }

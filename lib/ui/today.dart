@@ -7,7 +7,7 @@ todayUI() {
 
   while (index < 24) {
     list.add(index.toString());
-    index++;
+    index += 3;
   }
 
   return Container(
@@ -98,7 +98,7 @@ todayUI() {
                           children: <Widget>[
                             Container(
                               child: Text(
-                                _index.toString() + ":00",
+                                list[_index] + ":00",
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),

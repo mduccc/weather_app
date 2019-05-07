@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'today.dart';
 import 'tomorrow.dart';
-import 'week.dart';
+import '5days.dart';
+import 'search.dart';
 
 var primarySwatch = Colors.deepPurple;
 
-class MyApp extends StatelessWidget {
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,49 +14,48 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: primarySwatch,
       ),
-      home: MyHomePage(title: ''),
+      home: HomePage(title: ''),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  Icon _searchIcon = Icon(Icons.search, color: Colors.white);
+class _HomePageState extends State<HomePage> {
   IconButton _locationIcon;
-  IconButton _iconClear;
   Widget _appBarTitle;
   TextEditingController _controller = TextEditingController();
   FocusNode _focusNode = FocusNode();
 
-  _onChange() {
-    print(_controller.text);
-  }
+  _onChange() {}
 
-  _onFocusNode() {
-  }
+  _onFocusNode() {}
 
   @override
   void initState() {
     super.initState();
 
-    _iconClear = IconButton(icon: Icon(Icons.clear, color: Colors.white.withOpacity(0.5)), onPressed: () {
-      _controller.clear();
-    });
-
-    _locationIcon = IconButton(icon: Icon(Icons.my_location, color: Colors.white), onPressed: () {
-    });
+    _locationIcon = IconButton(
+        icon: Icon(Icons.my_location, color: Colors.white), onPressed: () {});
 
     _appBarTitle = TextField(
         controller: _controller,
         focusNode: _focusNode,
-        onSubmitted: (_) {
+        onTap: (){
+          _controller.clear();
+          _focusNode.unfocus();
+
+          // Open new Screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Search()),
+          );
         },
         style: TextStyle(color: Colors.white, fontSize: 18),
         textInputAction: TextInputAction.done,
@@ -65,8 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
         maxLines: 1,
         decoration: InputDecoration(
             border: InputBorder.none,
-            prefixIcon: _searchIcon,
-            suffixIcon: _iconClear,
+            prefixIcon: IconButton(icon: Icon(Icons.search, color: Colors.white,), onPressed: null),
             hintText: 'Search...',
             hintStyle:
             TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 18)));
@@ -107,12 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: _appBarTitle,
                   actions: <Widget>[
                     Builder(
-                      builder: (context) =>
-                          IconButton(
+                      builder: (context) => IconButton(
                             icon: _locationIcon,
-                            onPressed: () {
-                              print('haha');
-                            },
+                            onPressed: () {},
                           ),
                     )
                   ],
@@ -123,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     tabs: <Widget>[
                       Tab(text: 'TODAY'),
                       Tab(text: 'TOMORROW'),
-                      Tab(text: 'WEEK')
+                      Tab(text: '5 DAYS')
                     ],
                     controller: _tabBarController(),
                   ),
@@ -131,9 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ];
             },
             body: GestureDetector(
-              onTap: () {
-                _closeSearch();
-              },
+              onTap: () {},
               child: Scaffold(
                 body: TabBarView(
                   children: <Widget>[
@@ -143,21 +137,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-            )
-        ),
+            )),
       ),
     );
-  }
-
-  _closeSearch() {
-    _controller.clear();
-    _focusNode.unfocus();
-  }
-
-  _search() {
-    //Scaffold.of(context).showSnackBar(SnackBar(content: Text("Show search bar")));
-    setState(() {
-      _controller.text = '';
-    });
   }
 }
