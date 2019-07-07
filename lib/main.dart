@@ -1,4 +1,4 @@
 import 'package:flutter/material.dart';
-import './ui/home.dart';
+import 'package:weather_app/ui/Home.dart';
 
 void main() => runApp(Home());

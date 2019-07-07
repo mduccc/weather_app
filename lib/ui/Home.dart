@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'today.dart';
-import 'tomorrow.dart';
-import '5days.dart';
-import 'search.dart';
+import 'package:weather_app/business/provider/DatabaseProvider.dart';
+import 'package:weather_app/model/WeatherCurrent.dart';
+import 'package:weather_app/ui/Week.dart';
+
+import 'Search.dart';
+import 'Today.dart';
+import 'Week.dart';
 
 var primarySwatch = Colors.deepPurple;
 
@@ -32,6 +35,12 @@ class _HomePageState extends State<HomePage> {
   Widget _appBarTitle;
   TextEditingController _controller = TextEditingController();
   FocusNode _focusNode = FocusNode();
+  WeatherCurrent weatherCurrent = null;
+
+  var _tab = <Widget>[
+    Today(),
+    Week(),
+  ];
 
   _onChange() {}
 
@@ -47,15 +56,24 @@ class _HomePageState extends State<HomePage> {
     _appBarTitle = TextField(
         controller: _controller,
         focusNode: _focusNode,
-        onTap: (){
+        onTap: () async {
           _controller.clear();
           _focusNode.unfocus();
 
           // Open new Screen
-          Navigator.push(
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => Search()),
           );
+
+          if (result != null && result == "Seted") {
+            setState(() {
+              _tab = <Widget>[
+                Today(),
+                Week(),
+              ];
+            });
+          }
         },
         style: TextStyle(color: Colors.white, fontSize: 18),
         textInputAction: TextInputAction.done,
@@ -65,10 +83,15 @@ class _HomePageState extends State<HomePage> {
         maxLines: 1,
         decoration: InputDecoration(
             border: InputBorder.none,
-            prefixIcon: IconButton(icon: Icon(Icons.search, color: Colors.white,), onPressed: null),
+            prefixIcon: IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
+                onPressed: null),
             hintText: 'Search...',
             hintStyle:
-            TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 18)));
+                TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 18)));
 
     _controller.addListener(_onChange);
     _focusNode.addListener(_onFocusNode);
@@ -94,10 +117,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Create Database
+    DatabaseProvider().create();
+
     return WillPopScope(
       onWillPop: _onWillPopScope,
       child: DefaultTabController(
-        length: 3,
+        length: _tab.length,
         child: NestedScrollView(
             controller: _nestedScrollViewController(),
             headerSliverBuilder: (BuildContext context, bool isScrolled) {
@@ -116,11 +142,7 @@ class _HomePageState extends State<HomePage> {
                   floating: true,
                   forceElevated: isScrolled,
                   bottom: TabBar(
-                    tabs: <Widget>[
-                      Tab(text: 'TODAY'),
-                      Tab(text: 'TOMORROW'),
-                      Tab(text: '5 DAYS')
-                    ],
+                    tabs: <Widget>[Tab(text: 'CURRENT'), Tab(text: 'DAYS')],
                     controller: _tabBarController(),
                   ),
                 )
@@ -130,11 +152,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {},
               child: Scaffold(
                 body: TabBarView(
-                  children: <Widget>[
-                    todayUI(),
-                    tomorrowUI(),
-                    weekUI(),
-                  ],
+                  children: _tab,
                 ),
               ),
             )),
