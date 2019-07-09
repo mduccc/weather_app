@@ -21,6 +21,17 @@ class WeatherProvider {
       else
         return null;
     } else
+        return null;
+  }
+
+  Future<WeatherCurrent> currentByGPS(lat, lon) async {
+    var client = http.Client();
+
+    var get = await client.get(Api.currentByGPS(lat, lon));
+    client.close();
+    if (get.statusCode == 200)
+      return WeatherCurrent.fromJson(json.decode(get.body));
+    else
       return null;
   }
 
@@ -36,7 +47,7 @@ class WeatherProvider {
       else
         return null;
     } else
-      return null;
+        return null;
   }
 
   Future<Locations> search(key_word) async {

@@ -27,8 +27,8 @@ class DatabaseManager {
     await databaseProvider.open();
     Database db = await databaseProvider.db;
 
-    await db.rawDelete('DELETE FROM set_location');
     await db.rawDelete("DELETE FROM coord");
+    await db.rawDelete('DELETE FROM set_location');
   }
 
   Future<String> getIdLocation() async {

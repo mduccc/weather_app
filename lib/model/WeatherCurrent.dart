@@ -41,15 +41,17 @@ class _Sys{
 }
 
 class WeatherCurrent {
+  int id;
   List<_Weather> weather;
   _Main main;
   _Sys sys;
   var name;
 
-  WeatherCurrent({this.weather, this.main, this.sys, this.name});
+  WeatherCurrent({this.id, this.weather, this.main, this.sys, this.name});
 
   factory WeatherCurrent.fromJson(Map<String, dynamic> json) {
     return WeatherCurrent(
+      id: json['id'],
       weather: (json['weather'] as List).map((value) => _Weather.fromJson(value)).toList(),
       main: _Main.fromJson(json['main']),
       sys: _Sys.fromJson(json['sys']),
