@@ -20,33 +20,15 @@ class _MyDaysShimmerState extends State<DaystShimmer> {
           return Shimmer.fromColors(
             highlightColor: Colors.white,
             baseColor: Colors.grey[400],
-            child: ShimmerLayout(),
+            child: _ShimmerLayout(),
           );
         },
       ),
     );
   }
-
-  _layout() {
-    return Card(
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 100,
-              color: Colors.grey,
-            ),
-            SizedBox(
-              height: 5,
-            )
-          ],
-        ),
-      ),
-    );
-  }
 }
 
-class ShimmerLayout extends StatelessWidget {
+class _ShimmerLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

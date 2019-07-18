@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'DaysShimmer.dart';
 
-class CurrentShimmer extends StatefulWidget {
+class CurrentShimmer_A extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _MyCurrentShimmerState();
+    return _MyCurrentShimmerAState();
   }
 }
 
-class _MyCurrentShimmerState extends State<CurrentShimmer> {
+class _MyCurrentShimmerAState extends State<CurrentShimmer_A> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    return Shimmer.fromColors(
+      highlightColor: Colors.white,
+      baseColor: Colors.grey[400],
+      child: _ShimmerLayout(),
+    );
+  }
+}
+
+class _ShimmerLayout extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement createState
     return Container(
         height: 200,
-        color: Colors.white,
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.only(left: 10, right: 10, top: 20),
         child: Column(
           children: <Widget>[
             Row(
@@ -30,22 +42,22 @@ class _MyCurrentShimmerState extends State<CurrentShimmer> {
                     children: <Widget>[
                       Container(
                         height: 10,
-                        color: Colors.grey[300],
+                        color: Colors.grey[400],
                         margin: EdgeInsets.all(5),
                       ),
                       Container(
                         height: 10,
-                        color: Colors.grey[300],
+                        color: Colors.grey[400],
                         margin: EdgeInsets.all(5),
                       ),
                       Container(
                         height: 10,
-                        color: Colors.grey[300],
+                        color: Colors.grey[400],
                         margin: EdgeInsets.all(5),
                       ),
                       Container(
                         height: 10,
-                        color: Colors.grey[300],
+                        color: Colors.grey[400],
                         margin: EdgeInsets.all(5),
                       )
                     ],
@@ -80,41 +92,14 @@ class _MyCurrentShimmerState extends State<CurrentShimmer> {
                 )
               ],
             ),
+          
             Container(
-              margin: EdgeInsets.only(top: 20),
-              child: Center(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  height: 40,
-                  width: 40,
-                  color: Colors.grey[300],
-                  margin: EdgeInsets.all(20),
-                ),
-                Container(
-                  height: 40,
-                  width: 40,
-                  color: Colors.grey[300],
-                  margin: EdgeInsets.all(20),
-                ),
-                Container(
-                  height: 40,
-                  width: 40,
-                  color: Colors.grey,
-                  margin: EdgeInsets.all(20),
-                ),
-                Container(
-                  height: 40,
-                  width: 40,
-                  color: Colors.grey,
-                  margin: EdgeInsets.all(20),
-                ),
-              ],
+              height: 5,
+              margin: EdgeInsets.only(left: 5, right: 5, top: 20),
+              color: Colors.grey[400],
             )
           ],
         ));
   }
+
 }

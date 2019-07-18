@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/business/provider/WeatherProvider.dart';
 import 'package:weather_app/model/ForecastDaily.dart';
 import 'package:weather_app/model/WeatherCurrent.dart';
+import 'CurrentShimmer_A.dart';
+import 'CurrentShimmer_B.dart';
 import 'RenderHtmlCharacter.dart';
 
 class Today extends StatefulWidget {
@@ -158,7 +160,7 @@ class _MyTodayState extends State<Today> with AutomaticKeepAliveClientMixin {
                             print('No current weather data');
                         } else
                           print(snapshot.error);
-                        return Text('');
+                        return CurrentShimmer_A();
                       }),
                 ),
                 Container(
@@ -257,7 +259,7 @@ class _MyTodayState extends State<Today> with AutomaticKeepAliveClientMixin {
                       } else {
                         print(snapshot.error);
                       }
-                      return Text('');
+                      return CurrentShimmer_B();
                     },
                   ),
                 )
